@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='index_style.css') }}">
+  </head>
+  
+  
+  <body>
+	<h1>Students List</h1>
+	<table id = "all-students">
+		{% if students %}
+			<tr>
+				<th>SNo</th>
+				<th>Roll Number</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Actions</th>
+			</tr>
+			{% for student in students %}
+				<tr>
+					<td>{{loop.index}}</td>
+					<td><a href="{{ url_for('student_detail', student_id=student.student_id) }}">{{student["roll_number"]}}</a></td>
+					<td>{{student["first_name"]}}</td>
+					<td>{{student["last_name"]}}</td>
+					<td>
+						<a href="{{ url_for('update_student', student_id=student.student_id) }}" type="button">Update</a>
+						<a href="{{ url_for('delete_student', student_id=student.student_id) }}" class="delete-btn" type="button">Delete</a>
+
+					</td>
+				</tr>
+			{% endfor %}
+		{% else %}
+			<p>No students found. Add student now!.</p>
+			
+		{% endif %}
+	</table>
+	<br><br><br><a href="{{ url_for('create_student') }}" type="button">+ Add Student</a>
+  </body>
+</html>
